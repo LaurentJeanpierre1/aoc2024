@@ -14,14 +14,14 @@ fun main() {
                     map.add(-1)
                 }
         }
-        while(map.last == -1) map.removeLast() // remove final gap
+        while(map.last() == -1) map.removeLast() // remove final gap
 
         var index = 0
         while (index<map.size) {
             if (map[index] == -1)
                 map[index] = map.removeLast()
             index++
-            while(map.last == -1) map.removeLast() // remove final gap
+            while(map.last() == -1) map.removeLast() // remove final gap
         }
 
         val hashCode = map.withIndex().sumOf {
