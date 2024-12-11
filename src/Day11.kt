@@ -23,7 +23,9 @@ fun main() {
         return stones.size
     }
 
-    fun blinker(nb: Int, stones: List<Long>, cache: MutableMap<Long, List<Long>>, prefix: String): Long {
+    val cache: MutableMap<Pair<Long,Int>, Long> = mutableMapOf()
+
+    fun blinker(nb: Int, stones: List<Long>, prefix: String): Long {
         println("$prefix ${stones.size} stones ${cache.size} cache")
         if (nb == 0) return stones.size.toLong()
         else {
@@ -31,15 +33,15 @@ fun main() {
             var left = stones.size
             for (stone in stones) {
                 --left
-                if (stone in cache)
-                    total += blinker(nb-1, cache[stone]!!, cache, "$prefix $left")
+                val state = Pair(stone, nb)
+                if (state in cache)
+                    total += cache[state]!!
                 else {
                     val temp = mutableListOf(stone)
-                    repeat(5) {
-                        blink(temp)
-                    }
-                    cache[stone] = temp.toList()
-                    total += blinker(nb-1, temp, cache, "$prefix $left")
+                    blink(temp)
+                    val res = blinker(nb-1, temp, "$prefix $left")
+                    cache[state] = res
+                    total += res
                 }
             }
             return total
@@ -48,8 +50,7 @@ fun main() {
 
     fun part2(input: List<String>, nb: Int): Long {
         val stones = input[0].split(" ").map { it.toLong() }.toMutableList()
-        val cache = mutableMapOf<Long,List<Long>>()
-        val res = blinker(nb/5, stones, cache, "")
+        val res = blinker(nb, stones, "")
         return res
     }
 
