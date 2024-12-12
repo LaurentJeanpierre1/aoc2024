@@ -1,12 +1,12 @@
 import java.util.Comparator
 
 data class Region(var area: Int, var perimeter: Int)
-class BulkRegion() {
+class BulkRegion {
     var area = 1
-    var perimeterTop = mutableMapOf<Int, MutableList<IntRange>>()
-    var perimeterLeft = mutableMapOf<Int, MutableList<IntRange>>()
-    var perimeterRight = mutableMapOf<Int, MutableList<IntRange>>()
-    var perimeterBottom = mutableMapOf<Int, MutableList<IntRange>>()
+    private var perimeterTop = mutableMapOf<Int, MutableList<IntRange>>()
+    private var perimeterLeft = mutableMapOf<Int, MutableList<IntRange>>()
+    private var perimeterRight = mutableMapOf<Int, MutableList<IntRange>>()
+    private var perimeterBottom = mutableMapOf<Int, MutableList<IntRange>>()
 
     private fun addTo(perimeter: MutableMap<Int, MutableList<IntRange>>, x: Int, y: Int) =
         perimeter.compute(y) { _: Int, range: MutableList<IntRange>? ->
@@ -66,7 +66,7 @@ class BulkRegion() {
         var total = 0
         for (sets in fences) {
             val ranges = sets.value
-            ranges.sortWith(Comparator.comparingInt({it.first}))
+            ranges.sortWith(Comparator.comparingInt { it.first })
             var last = -2
             for (range in ranges) {
                 if (last < range.first - 1)
