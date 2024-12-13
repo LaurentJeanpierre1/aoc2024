@@ -50,21 +50,14 @@ fun main() {
             val bY = buttonB.groupValues[2].toInt()
             val pX = 10000000000000L + prize!!.groupValues[1].toInt()
             val pY = 10000000000000L + prize.groupValues[2].toInt()
-            var countB = min(pX/bX, pY/bY)
-            var countA = (pX - countB*bX) / aX
-            var minTokens = 30000000000000L
-            while (countB>0) {
-                if (pX == aX*countA + bX*countB && pY == aY*countA + bY*countB) {
-                    val tokens = 3*countA + countB
-                    if (minTokens > tokens)
-                        minTokens = tokens
-                }
-                countB--
-                countA = (pX - countB*bX) / aX
-            }
-            if (minTokens < 30000000000000L) {
-                totalTokens += minTokens
-                println("Machine -> $minTokens")
+            val up = pY*aX - aY*pX
+            val dw = bY*aX - aY*bX
+            val countB = if (dw != 0) up / dw else TODO()
+            val countA = (pX - countB*bX) / aX
+            if (pX == aX*countA + bX*countB && pY == aY*countA + bY*countB) {
+                val tokens = 3*countA + countB
+                totalTokens += tokens
+                println("Machine -> $tokens")
             } else
                 println("Machine sans prix")
         }
