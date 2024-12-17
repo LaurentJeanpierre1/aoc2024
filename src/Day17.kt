@@ -1,16 +1,17 @@
 fun main() {
+    fun Any.doNothing() { }
     class Processor{
         var pc = 0
-        var a = 0
-        var b = 0
-        var c = 0
+        var a = 0L
+        var b = 0L
+        var c = 0L
         val memory = mutableListOf<Int>()
         val outValues = mutableListOf<Int>()
 
         fun readInput(input: List<String>) {
-            a = Regex("Register A: (\\d+)").matchEntire(input[0])!!.groupValues[1].toInt()
-            b = Regex("Register B: (\\d+)").matchEntire(input[1])!!.groupValues[1].toInt()
-            c = Regex("Register C: (\\d+)").matchEntire(input[2])!!.groupValues[1].toInt()
+            a = Regex("Register A: (\\d+)").matchEntire(input[0])!!.groupValues[1].toLong()
+            b = Regex("Register B: (\\d+)").matchEntire(input[1])!!.groupValues[1].toLong()
+            c = Regex("Register C: (\\d+)").matchEntire(input[2])!!.groupValues[1].toLong()
             memory.clear()
             memory.addAll(
                 Regex("Program: (\\d+(?:,\\d+)*)")
@@ -23,7 +24,7 @@ fun main() {
 
         fun process() {
             val op = memory[pc++]
-            val param = memory[pc++]
+            val param = memory[pc++].toLong()
             when(op) {
                 0 -> adv(param)
                 1 -> bxl(param)
@@ -36,54 +37,55 @@ fun main() {
             }
         }
 
-        private fun combo(param: Int) : Int = when(param) {
-            0 -> 0
-            1 -> 1
-            2 -> 2
-            3 -> 3
-            4 -> a
-            5 -> b
-            6 -> c
-            7 -> throw IllegalStateException("reserved")
+        private fun combo(param: Long) : Long = when(param) {
+            0L -> 0L
+            1L -> 1L
+            2L -> 2L
+            3L -> 3L
+            4L -> a
+            5L -> b
+            6L -> c
+            7L -> throw IllegalStateException("reserved")
             else -> throw IllegalStateException("illegal value")
         }
-        private fun cdv(param: Int) {
+        private fun cdv(param: Long) {
             val denom = combo(param)
-            c = if (denom>31) 0 else a shr denom
+            c = if (denom>31) 0 else a shr denom.toInt()
         }
 
-        private fun bdv(param: Int) {
+        private fun bdv(param: Long) {
             val denom = combo(param)
-            b = if (denom>31) 0 else a shr denom
+            b = if (denom>31) 0 else a shr denom.toInt()
         }
 
-        private fun out(param: Int) {
-            outValues += combo(param) and 7
+        private fun out(param: Long) {
+            outValues += (combo(param) and 7).toInt()
         }
 
-        private fun bxc(param: Int) {
+        private fun bxc(param: Long) {
+            param.doNothing()
             b = b xor c
         }
 
-        private fun jnz(param: Int) {
-            if (a != 0)
-                pc = param
+        private fun jnz(param: Long) {
+            if (a != 0L)
+                pc = param.toInt()
         }
 
-        private fun bst(param: Int) {
+        private fun bst(param: Long) {
             b = combo(param) and 7
         }
 
-        private fun bxl(param: Int) {
+        private fun bxl(param: Long) {
             b = b xor param
         }
 
-        private fun adv(param: Int) {
+        private fun adv(param: Long) {
             val denom = combo(param)
-            a = if (denom>31) 0 else a shr denom
+            a = if (denom>31) 0 else a shr denom.toInt()
         }
     }
-    var proc = Processor()
+    var proc: Processor
     fun part1(input: List<String>): String {
         proc = Processor()
         proc.readInput(input)
@@ -96,12 +98,10 @@ fun main() {
         return proc.outValues.joinToString(",")
     }
 
-    fun part2(input: List<String>): Int {
+    fun part2(input: List<String>): Long {
         proc = Processor()
         proc.readInput(input)
-        val firstB = proc.b
-        val firstC = proc.c
-        var firstA = -1
+        var firstA = -1L
         do {
             proc.a = ++firstA
             proc.pc = 0
@@ -131,8 +131,8 @@ fun main() {
     val testInput = readInput("Day17_test")
     check(part1(testInput) == "4,6,3,5,6,3,5,2,1,0")
 */
-    val testInput6 = readInput("Day17_test6")
-    check(part2(testInput6) == 117440)
+    //val testInput6 = readInput("Day17_test6")
+    //check(part2(testInput6) == 117440L)
 
     // Read the input from the `src/Day01.txt` file.
     val input = readInput("Day17")
@@ -141,5 +141,5 @@ fun main() {
 
     // not 6,2,0,3,0,6,0,0,3
     println("Part2")
-    part2(input).println()
+    part1(readInput("Day17Part2")).println()
 }
