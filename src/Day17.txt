@@ -1,0 +1,15 @@
+Register A: 22571680
+Register B: 0
+Register C: 0
+
+Program: 2,4,1,3,7,5,0,3,4,3,1,5,5,5,3,0
+
+BST(4) B = A % 8
+BXL(3) B = B ~ 3 (011)
+CDV(5) C = A / 2^B
+ADV(3) A = A / 2^3 = A / 8
+BXC(3) B = B ~ C
+BXL(5) B = B ~ 5 (101)
+OUT(5) out(B) == 2
+// B = 2
+JNZ(0)
