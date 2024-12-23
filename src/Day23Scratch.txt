@@ -4,26 +4,30 @@ vc-aq
 aq-cg
 wq-aq
 
+yn-cg
+wq-vc
+
       wq
-      |
+      |  \
 yn - aq - vc
-      |
+   \  |
       cg
 
-==> seulement 2 ??? (aq,cg,yn
-                     aq,vc,wq)
+==> seulement 2  (aq,cg,yn + aq,vc,wq)
 
 ka-co
 ta-co
 de-co
 co-tc
 
-     de
-     |
-ka - co - ta
-     |
-     tc
+ta-ka
+de-ta
+ka-de
 
-==> pourquoi 3 ??? (co,de,ka
-                    co,de,ta
-                    co,ka,ta)
+     de
+   / |
+ka - ta
+   \ |
+     co - tc
+
+==>  3 (co,de,ka + co,de,ta + co,ka,ta)
