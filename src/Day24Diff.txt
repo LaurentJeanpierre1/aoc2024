@@ -1,0 +1,32 @@
+105c105
+< jnh OR njq -> z24
+---
+> jnh OR njq -> vcg
+152c152
+< qkq AND stj -> z20
+---
+> qkq AND stj -> jgb
+158c158
+< stj XOR qkq -> jgb
+---
+> stj XOR qkq -> z20
+172c172
+< tnm XOR kkp -> vcg
+---
+> tnm XOR kkp -> z24
+227c227
+< x31 AND y31 -> rrs
+---
+> x31 AND y31 -> rvc
+273c273
+< y09 AND x09 -> z09
+---
+> y09 AND x09 -> rkf
+278c278
+< x31 XOR y31 -> rvc
+---
+> x31 XOR y31 -> rrs
+301c301
+< jnn XOR wpr -> rkf
+---
+> jnn XOR wpr -> z09
